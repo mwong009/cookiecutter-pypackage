@@ -1,0 +1,84 @@
+[tool.poetry]
+name = "{{cookiecutter.package_name}}"
+version = "0.1.0"
+description = "{{cookiecutter.project_short_description}}"
+authorss = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
+license = "MIT"
+readme = "README.rst"
+
+homepage = "https://pypi.org/project/{{cookiecutter.package_name}}"
+repository = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}"
+documentation = "https://{{cookiecutter.package_name}}.readthedocs.io"
+
+keywords = [
+]
+classifiers = [
+    # TODO: update this list to match your application: https://pypi.org/pypi?%3Aaction=list_classifiers
+    "Development Status :: 1 - Planning",
+    "Natural Language :: English",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: {{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}",
+]
+
+[tool.poetry.dependencies]
+python = "^{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
+
+# TODO: Remove these and add your library's requirements
+click = "*"
+minilog = "*"
+
+[tool.poetry.dev-dependencies]
+# Formatters
+black = "^22.1"
+isort = "^5.10"
+
+# Linters
+pydocstyle = "^6.1"
+
+# Testing
+pytest = "^6.2"
+
+# Reports
+coveragespace = "^4.0"
+
+# Documentation
+mkdocs = "~1.2.3"
+pygments = "^2.11.1"
+
+# Tooling
+ipython = "^7.12.0"
+
+[tool.poetry.scripts]
+{{cookiecutter.project_name}} = "{{cookiecutter.package_name}}.cli:main"
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+target-version = ['py39']
+line-length = 88
+
+
+[tool.pytest]
+addopts = """
+--strict-markers
+
+-r sxX
+--show-capture=log
+
+--cov-report=xml
+--cov-report=html
+--cov-report=term-missing:skip-covered
+--no-cov-on-fail
+"""
+
+cache_dir = ".cache/pytest/"
+
+markers = []
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
