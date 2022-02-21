@@ -35,34 +35,49 @@ minilog = "*"
 black = "^22.1"
 isort = "^5.10"
 
-# Linters
-pydocstyle = "^6.1"
+#Linters
+pydocstyle = "^6.1.1"
+doc8 = "^0.10.1"
+rstcheck = "^3.3.1"
 
 # Testing
-pytest = "^6.2"
+pytest = "^7.0.1"
 tox = "^3.24.0"
-
-# Reports
-coveragespace = "^4.0"
 
 # Documentation
 Sphinx = "^4.4.0"
+myst-parser = "^0.17.0"
+sphinx-rtd-theme = "^1.0.0"
 
 # Tooling
-pre-commit = "^2.17.0"
 bump2version = "^1.0.1"
+pre-commit = "^2.17.0"
+commitizen = "^2.21.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 {{cookiecutter.project_name}} = "{{cookiecutter.package_name}}.cli:main"
 
 [tool.isort]
 profile = "black"
+skip_glob = ".pytest_cache/*"
 
 [tool.black]
-target-version = ['py39']
+target-version = ['py38']
 quiet = true
 line-length = 88
 
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.2.1"
+tag_format = "v$version"
+version_files = [
+    "pyproject.toml:version",
+    "pycmtensor/__init__.py"
+]
 
 [tool.pytest]
 addopts = """
@@ -77,10 +92,12 @@ addopts = """
 --no-cov-on-fail
 """
 
-cache_dir = ".cache/pytest/"
-
 markers = []
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    # note the use of single quote below to denote "raw" strings in TOML
+    'ignore:function ham\(\) is deprecated:DeprecationWarning',
+]
